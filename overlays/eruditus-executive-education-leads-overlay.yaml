@@ -1,0 +1,39 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Emeritus Leads API
+  version: 1.0.0
+x-generated: '2026-08-04'
+x-method: generated
+x-source: openapi/eruditus-executive-education-leads-openapi.yml
+extends: openapi/eruditus-executive-education-leads-openapi.yml
+actions:
+- target: $.info
+  description: Record the provenance of this description and the artifacts derived from it.
+  update:
+    x-apievangelist-provider: eruditus-executive-education
+    x-apievangelist-contract-origin: generated-from-published-html-reference
+    x-apievangelist-reference: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead.html
+    x-apievangelist-artifacts:
+      authentication: authentication/eruditus-executive-education-authentication.yml
+      errors: errors/eruditus-executive-education-problem-types.yml
+      conventions: conventions/eruditus-executive-education-conventions.yml
+      lifecycle: lifecycle/eruditus-executive-education-lifecycle.yml
+      sandbox: sandbox/eruditus-executive-education-sandbox.yml
+      data_model: data-model/eruditus-executive-education-data-model.yml
+      agentic_access: agentic-access/eruditus-executive-education-agentic-access.yml
+- target: $.paths['/api/v1/generic_lead'].post
+  description: Flag the gaps a partner hits at integration time.
+  update:
+    x-apievangelist-gaps:
+    - No idempotency contract — a retried submission is expected to create a second lead.
+    - Two inconsistent error envelopes on one operation (400 flat `error`, 422 nested `errors`).
+    - Request field is spelled `number_of_participans` while the 422 error key is `number_of_participants`.
+    - No rate-limit policy or headers published.
+- target: $.components.schemas.GenericLeadB2B.properties.number_of_participans
+  description: Record the published enumeration bands for the participant-count field.
+  update:
+    x-apievangelist-enum-bands:
+      '2': 1-2
+      '5': 3-5
+      '11': 6-11
+      '12': 12+

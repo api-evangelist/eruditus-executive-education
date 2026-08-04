@@ -1,0 +1,372 @@
+openapi: 3.1.0
+info:
+  title: Emeritus Leads API
+  version: v1
+  summary: Submit B2C and B2B enrollment leads to Emeritus (Eruditus Group).
+  description: >-
+    The Emeritus Leads API is the vendor/partner entry point for submitting enrollment
+    inquiries ("leads") into Emeritus systems. A single endpoint accepts both the
+    consumer (B2C) shape and the enterprise/team (B2B) shape; the B2B flow is selected
+    by sending `inquiring_for: "team"` alongside company and participant-count fields.
+    Requests are authenticated with a partner token supplied by Emeritus in the
+    `LEAD_WEBHOOK_KEY` request header.
+
+
+    This description was assembled by API Evangelist from the API reference Emeritus
+    publishes at https://emeritus-tech.github.io/emeritus-api-docs/ (source repository
+    https://github.com/emeritus-tech/emeritus-api-docs). Emeritus does not publish an
+    OpenAPI document; every path, parameter, example payload and response body below is
+    transcribed verbatim from that public reference and the endpoint was confirmed live
+    (see `x-evidence`). Nothing here is invented.
+  contact:
+    name: Emeritus
+    url: https://emeritus.org/connect-with-us/
+  x-generated-by: API Evangelist enrichment pipeline
+  x-method: generated
+  x-source: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead.html
+  x-evidence:
+    fetched: '2026-08-04'
+    docs:
+    - url: https://emeritus-tech.github.io/emeritus-api-docs/
+      http_status: 200
+    - url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead.html
+      http_status: 200
+    - url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead_b2b.html
+      http_status: 200
+    live_probe:
+    - url: https://admissions.emeritus.org/api/v1/generic_lead
+      method: POST
+      http_status: 401
+      content_type: application/json; charset=utf-8
+      body: '{"error":"This is not an authorized request"}'
+      note: Endpoint is live and auth-gated; the observed error envelope matches the published 401 example exactly.
+servers:
+- url: https://admissions.emeritus.org
+  description: production
+- url: https://staging.emerituss.org
+  description: staging (host spelled `emerituss.org` in the provider's published reference; confirmed reachable)
+tags:
+- name: Leads
+  description: Enrollment lead submission.
+paths:
+  /api/v1/generic_lead:
+    post:
+      tags:
+      - Leads
+      operationId: createGenericLead
+      summary: Submit an enrollment lead
+      description: >-
+        Submits a lead for an Emeritus program. Send the B2C body for an individual
+        learner, or the B2B body (`inquiring_for: "team"` plus `company` and
+        `number_of_participans`) for an enterprise/team inquiry. On success the API
+        returns the identifier of the created lead.
+      security:
+      - LeadWebhookKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/GenericLead'
+              - $ref: '#/components/schemas/GenericLeadB2B'
+            examples:
+              b2c:
+                summary: B2C lead (published example)
+                value:
+                  course_code: KLG-DMS
+                  agree: 1
+                  country: UY
+                  first_name: Juan
+                  last_name: Ferreira
+                  email: juan@email.com
+                  phone: '+5555555555'
+                  utm_source: vendorname
+                  work_experience: 5-10 years
+                  job_title: Developer
+                  batch_name: B-1234
+                  utm_campaign: B-1234_some_utm_campaing
+                  utm_content: ''
+                  utm_placement: ''
+              b2b:
+                summary: B2B / team lead (published example)
+                value:
+                  inquiring_for: team
+                  company: Emeritus
+                  number_of_participans: '5'
+                  course_code: KLG-DMS
+                  agree: 1
+                  country: UY
+                  first_name: Juan
+                  last_name: Ferreira
+                  email: juan@email.com
+                  phone: '+5555555555'
+                  utm_source: vendorname
+                  work_experience: 5-10 years
+                  job_title: Developer
+                  batch_name: B-1234
+                  utm_campaign: B-1234_some_utm_campaing
+                  utm_content: ''
+                  utm_placement: ''
+      responses:
+        '200':
+          description: Lead created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LeadCreated'
+              example:
+                lead: 94ab3b43-3209-4534-8afe-52070644866f
+        '400':
+          description: Bad request — required data missing or invalid (B2C flow).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              examples:
+                missing_batch:
+                  value:
+                    error: Missing batch
+                missing_custom_form:
+                  value:
+                    error: Missing custom form
+                email:
+                  value:
+                    error: "Email required\nEmail must be an email"
+        '401':
+          description: Unauthorized — the `LEAD_WEBHOOK_KEY` header is missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: This is not an authorized request
+        '422':
+          description: Unprocessable entity — validation failed (B2B flow).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+              examples:
+                full_name:
+                  value:
+                    title: Could not save the lead
+                    errors:
+                      full_name:
+                      - required
+                number_of_participants:
+                  value:
+                    title: Could not save the lead
+                    errors:
+                      number_of_participants:
+                      - required
+                      - is not included in the list
+                name_and_company:
+                  value:
+                    title: Could not save the lead
+                    errors:
+                      name:
+                      - required
+                      company_name:
+                      - required
+components:
+  securitySchemes:
+    LeadWebhookKey:
+      type: apiKey
+      in: header
+      name: LEAD_WEBHOOK_KEY
+      description: >-
+        Partner token issued by Emeritus. Per the published reference: "We will provide
+        your own token to use in the requests. Please contact us if you need one."
+  schemas:
+    GenericLead:
+      type: object
+      title: Generic lead (B2C)
+      required:
+      - course_code
+      - agree
+      - country
+      - last_name
+      - email
+      - phone
+      - utm_source
+      properties:
+        course_code:
+          type: string
+          description: Used to fetch the program.
+          examples:
+          - KLG-DMS
+        agree:
+          type: boolean
+          description: '0 = False; 1 = True.'
+          examples:
+          - 1
+        country:
+          type: string
+          description: Use 2 digits ISO code.
+          examples:
+          - UY
+        last_name:
+          type: string
+          examples:
+          - Ferreira
+        email:
+          type: string
+          description: Should be a valid email address.
+          examples:
+          - juan@email.com
+        phone:
+          type: string
+          examples:
+          - '+5555555555'
+        utm_source:
+          type: string
+          description: 'Will represent the vendor name in one word (ex: educationdynamics).'
+          examples:
+          - vendorname
+        first_name:
+          type: string
+          examples:
+          - Juan
+        work_experience:
+          type: string
+          examples:
+          - 5-10 years
+        job_title:
+          type: string
+          examples:
+          - Developer
+        batch_name:
+          type: string
+          deprecated: true
+          description: DEPRECATED, used to fetch the program.
+          examples:
+          - B-1234
+        utm_campaign:
+          type: string
+          deprecated: true
+          description: DEPRECATED.
+          examples:
+          - B-1234_some_utm_campaing
+        utm_content:
+          type: string
+          description: Can be used for optional data from vendors.
+        utm_placement:
+          type: string
+    GenericLeadB2B:
+      type: object
+      title: Generic lead (B2B / team)
+      required:
+      - inquiring_for
+      - company
+      - number_of_participans
+      - course_code
+      - agree
+      - country
+      - last_name
+      - email
+      - phone
+      - utm_source
+      properties:
+        inquiring_for:
+          type: string
+          description: >-
+            When this field value is 'team' we change the flow to use b2b ones. So 'team'
+            should be always.
+          examples:
+          - team
+        company:
+          type: string
+          description: Company name.
+          examples:
+          - Emeritus
+        number_of_participans:
+          type: integer
+          description: '2 = 1-2; 5 = 3-5; 11 = 6-11; 12 = 12+. (Field name spelled `number_of_participans` in the published reference; the 422 error body reports it as `number_of_participants`.)'
+          examples:
+          - 5
+        course_code:
+          type: string
+          description: Used to fetch the program.
+          examples:
+          - KLG-DMS
+        agree:
+          type: boolean
+          description: '0 = False; 1 = True.'
+          examples:
+          - 1
+        country:
+          type: string
+          description: Use 2 digits ISO code.
+          examples:
+          - UY
+        last_name:
+          type: string
+          examples:
+          - Ferreira
+        email:
+          type: string
+          description: Should be a valid email address.
+          examples:
+          - juan@email.com
+        phone:
+          type: string
+          examples:
+          - '+5555555555'
+        utm_source:
+          type: string
+          description: 'Will represent the vendor name in one word (ex: educationdynamics).'
+          examples:
+          - vendorname
+        first_name:
+          type: string
+          examples:
+          - Juan
+        work_experience:
+          type: string
+          examples:
+          - 5-10 years
+        job_title:
+          type: string
+          examples:
+          - Developer
+        batch_name:
+          type: string
+          deprecated: true
+          description: DEPRECATED, used to fetch the program.
+        utm_campaign:
+          type: string
+          deprecated: true
+          description: DEPRECATED.
+        utm_content:
+          type: string
+          description: Can be used for optional data from vendors.
+        utm_placement:
+          type: string
+    LeadCreated:
+      type: object
+      properties:
+        lead:
+          type: string
+          description: Identifier of the created lead (UUID in the published example).
+          examples:
+          - 94ab3b43-3209-4534-8afe-52070644866f
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+    ValidationError:
+      type: object
+      properties:
+        title:
+          type: string
+          examples:
+          - Could not save the lead
+        errors:
+          type: object
+          description: Field name to list of validation messages.
+          additionalProperties:
+            type: array
+            items:
+              type: string

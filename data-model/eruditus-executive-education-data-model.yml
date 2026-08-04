@@ -1,0 +1,92 @@
+generated: '2026-08-04'
+method: derived
+source: openapi/eruditus-executive-education-leads-openapi.yml, openapi/eruditus-executive-education-programs-openapi.yml
+summary: >-
+  Entity graph derived from the two Emeritus OpenAPI documents in this repo. The Leads API
+  publishes full field-level schemas, so the Lead entities are complete. The Programs API
+  publishes only paths and auth — its reference pages still carry documentation-template
+  placeholder content — so Program, School and LandingPageTemplate are recorded as
+  identified-but-unspecified entities. Their attributes are deliberately empty rather than
+  invented; the relationships below are the ones the Leads API itself evidences.
+entities:
+- name: Lead
+  schema: GenericLead
+  source: openapi/eruditus-executive-education-leads-openapi.yml
+  created_by: createGenericLead
+  identifier:
+    field: lead
+    format: uuid
+    note: 'Returned in the 200 body as {"lead": "<uuid>"}.'
+  attributes:
+  - {name: course_code, type: string, required: true, role: program-reference}
+  - {name: agree, type: boolean, required: true, role: consent}
+  - {name: country, type: string, required: true, role: iso-3166-alpha-2}
+  - {name: first_name, type: string, required: false}
+  - {name: last_name, type: string, required: true}
+  - {name: email, type: string, required: true}
+  - {name: phone, type: string, required: true}
+  - {name: work_experience, type: string, required: false}
+  - {name: job_title, type: string, required: false}
+  - {name: utm_source, type: string, required: true, role: attribution}
+  - {name: utm_content, type: string, required: false, role: attribution}
+  - {name: utm_placement, type: string, required: false, role: attribution}
+  - {name: utm_campaign, type: string, required: false, role: attribution, deprecated: true}
+  - {name: batch_name, type: string, required: false, role: program-reference, deprecated: true}
+- name: LeadB2B
+  schema: GenericLeadB2B
+  source: openapi/eruditus-executive-education-leads-openapi.yml
+  created_by: createGenericLead
+  note: Same endpoint and identifier as Lead; selected by inquiring_for = "team".
+  extends: Lead
+  additional_attributes:
+  - {name: inquiring_for, type: string, required: true, role: flow-discriminator}
+  - {name: company, type: string, required: true, role: organization-name}
+  - {name: number_of_participans, type: integer, required: true, role: enumerated-band}
+- name: Program
+  source: openapi/eruditus-executive-education-programs-openapi.yml
+  read_by: listPrograms
+  attributes: []
+  attributes_published: false
+  note: Resource exists and is live (HTTP 401 without a key), but no response schema is published.
+- name: School
+  source: openapi/eruditus-executive-education-programs-openapi.yml
+  read_by: listSchools
+  attributes: []
+  attributes_published: false
+  note: The partner university/business school that awards a program. No response schema is published.
+- name: LandingPageTemplate
+  source: openapi/eruditus-executive-education-programs-openapi.yml
+  read_by: listLandingPageTemplates
+  attributes: []
+  attributes_published: false
+  note: Marketing landing page template for a program. No response schema is published.
+relationships:
+- from: Lead
+  to: Program
+  kind: belongs_to
+  via: course_code
+  confidence: high
+  evidence: 'Published description of course_code: "Used to fetch the program."'
+- from: LeadB2B
+  to: Program
+  kind: belongs_to
+  via: course_code
+  confidence: high
+- from: Program
+  to: School
+  kind: belongs_to
+  confidence: low
+  evidence: >-
+    Inferred from the Emeritus business model (every program is delivered with a named
+    partner university) and from the two resources sitting side by side under
+    /api/v1/programs_api/. The linking field is not published — do not treat as verified.
+- from: Program
+  to: LandingPageTemplate
+  kind: has_one
+  confidence: low
+  evidence: Inferred from resource co-location under /api/v1/programs_api/; the linking
+    field is not published.
+gaps:
+- Programs API response schemas are unpublished, so Program/School/LandingPageTemplate have
+  no attributes, no identifiers and no verified foreign keys.
+- No id-prefix scheme is published for any entity.

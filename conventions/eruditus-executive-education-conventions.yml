@@ -1,0 +1,97 @@
+generated: '2026-08-04'
+method: searched
+source: https://emeritus-tech.github.io/emeritus-api-docs/
+docs: https://emeritus-tech.github.io/emeritus-api-docs/index.html
+summary: >-
+  Cross-cutting request/response semantics for the Emeritus partner APIs, transcribed from
+  the published API reference and confirmed against live responses from
+  admissions.emeritus.org on 2026-08-04. This is a small, partner-gated REST estate: static
+  per-API tokens in custom headers, URI-path versioning, JSON in and out, and a proprietary
+  error envelope. Several conventions that mature APIs publish — idempotency, pagination,
+  rate-limit signaling, a deprecation policy — are simply not documented here; those are
+  recorded as absent rather than guessed.
+authentication:
+  style: api-key-header
+  note: >-
+    Per-API static token header, not a shared scheme. The Leads API uses `LEAD_WEBHOOK_KEY`;
+    the Programs API uses `HTTP-EE-RESOURCES-API-KEY`. Tokens are issued by Emeritus on
+    request — there is no self-service signup or key rotation surface.
+  schemes:
+  - header: LEAD_WEBHOOK_KEY
+    api: openapi/eruditus-executive-education-leads-openapi.yml
+  - header: HTTP-EE-RESOURCES-API-KEY
+    api: openapi/eruditus-executive-education-programs-openapi.yml
+  artifact: authentication/eruditus-executive-education-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  segment: /api/v1/
+  policy_published: false
+  note: All published paths sit under `/api/v1/`. No version negotiation header, no version
+    sunset policy and no changelog are published.
+  artifact: lifecycle/eruditus-executive-education-lifecycle.yml
+environments:
+  style: separate-hosts
+  production: https://admissions.emeritus.org/api/v1/
+  staging: https://staging.emerituss.org/api/v1/
+  note: Documented verbatim in the reference under "Environments". Both hosts respond;
+    the staging host is spelled `emerituss.org` (double s) in the provider's own reference.
+  artifact: sandbox/eruditus-executive-education-sandbox.yml
+media_types:
+  request: application/json
+  response: application/json; charset=utf-8
+idempotency:
+  supported: false
+  note: >-
+    No idempotency key header, parameter or retry-safety contract is documented anywhere in
+    the Emeritus reference, and none appears in the request examples. `POST /api/v1/generic_lead`
+    is the only write operation and it is not idempotency-protected — a repeated submission
+    is expected to create another lead. Recorded as absent; no `Idempotency` pointer is wired.
+pagination:
+  supported: unknown
+  note: >-
+    The three Programs API resources are collection reads, but their reference pages carry
+    documentation-template placeholder parameter rows, so no pagination style, parameters or
+    response envelope is published.
+field_expansion:
+  supported: unknown
+metadata:
+  supported: partial
+  note: >-
+    The Leads API carries UTM attribution fields as first-class request fields — `utm_source`
+    (required), `utm_content` ("can be used for optional data from vendors") and
+    `utm_placement`. `utm_campaign` is documented as DEPRECATED. There is no generic
+    `metadata` object.
+request_tracing:
+  supported: true
+  header: x-request-id
+  documented: false
+  note: >-
+    Responses from admissions.emeritus.org carry an `x-request-id` header (Rails/Heroku
+    default). Observed 2026-08-04, e.g. `x-request-id: 896b704c-b57f-e4c4-10d4-d031db4eedb2`.
+    The provider does not document it, so partners are not told to quote it in support requests.
+error_envelope:
+  format: proprietary
+  shapes:
+  - '{"error": "<message>"}'
+  - '{"title": "<summary>", "errors": {"<field>": ["<message>", ...]}}'
+  rfc9457: false
+  note: Two inconsistent envelopes across one API — the B2C flow returns 400 with the flat
+    `error` string, the B2B flow returns 422 with the nested `errors` map.
+  artifact: errors/eruditus-executive-education-problem-types.yml
+rate_limiting:
+  documented: false
+  headers_observed: []
+  note: No rate-limit policy is published and no `RateLimit-*` / `X-RateLimit-*` / `Retry-After`
+    headers were observed on live 401 responses (2026-08-04).
+webhooks:
+  supported: unknown
+  note: >-
+    The Leads API authentication header is named `LEAD_WEBHOOK_KEY`, which suggests the
+    endpoint is designed to receive vendor webhook posts, but Emeritus publishes no outbound
+    webhook or event catalog. No AsyncAPI or event surface exists to capture.
+transport_security:
+  https_only: true
+  hsts: true
+  hsts_observed: 'strict-transport-security: max-age=631138519 (admissions.emeritus.org, 2026-08-04)'
+  artifact: security/eruditus-executive-education-domain-security.yml

@@ -1,0 +1,69 @@
+generated: '2026-08-04'
+method: searched
+source: npm registry, PyPI, GitHub org github.com/emeritus-tech
+summary: >-
+  Emeritus publishes no client SDK for either of its partner APIs — there is no library that
+  wraps the Leads API or the Programs API in any language, and the reference documents raw
+  HTTP only. The packages below are genuine first-party Emeritus npm publications discovered
+  under the `@emeritus-tech` and `@emeritus-engineering` scopes, but every one of them is a
+  web/front-end or platform utility, not an API client. Because no API client library exists,
+  no `SDKs` pointer is wired in apis.yml — only `Packages`.
+sdk_available: false
+registries_searched:
+- {registry: npm, result: 4 first-party packages, none an API client}
+- {registry: pypi, result: none (emeritus 404, eruditus 404)}
+- {registry: maven-central, result: none}
+- {registry: nuget, result: none}
+- {registry: pkg.go.dev, result: none}
+- {registry: rubygems, result: none}
+- {registry: packagist, result: none}
+- {registry: crates.io, result: none}
+packages:
+- language: javascript
+  registry: npm
+  name: '@emeritus-engineering/growth-platform-core'
+  version: 1.0.0
+  url: https://www.npmjs.com/package/@emeritus-engineering/growth-platform-core
+  install: npm install @emeritus-engineering/growth-platform-core
+  description: 'Modular Growth Platform utilities: rate limiting, Keycloak auth, and white-label theme data.'
+  official: true
+  api_client: false
+  last_published: '2026-08-03'
+- language: javascript
+  registry: npm
+  name: '@emeritus-tech/em-landing-page-js'
+  version: 0.3.0
+  url: https://www.npmjs.com/package/@emeritus-tech/em-landing-page-js
+  install: npm install @emeritus-tech/em-landing-page-js
+  description: Library that will host the JS needed on landing pages.
+  repository: https://github.com/emeritus-tech/landing-pages-libraries
+  official: true
+  api_client: false
+  last_published: '2022-04-05'
+- language: javascript
+  registry: npm
+  name: '@emeritus-tech/leaky-attributes'
+  version: 1.0.3
+  url: https://www.npmjs.com/package/@emeritus-tech/leaky-attributes
+  install: npm install @emeritus-tech/leaky-attributes
+  repository: https://github.com/emeritus-tech/landing-pages-js-packages
+  official: true
+  api_client: false
+  last_published: '2022-04-05'
+- language: javascript
+  registry: npm
+  name: '@emeritus-tech/stickynav'
+  version: 1.0.0
+  url: https://www.npmjs.com/package/@emeritus-tech/stickynav
+  install: npm install @emeritus-tech/stickynav
+  description: Stickynav by scroll position.
+  repository: https://github.com/emeritus-tech/sticky-nav
+  official: true
+  api_client: false
+  last_published: '2022-04-05'
+notes:
+- 'GitHub org github.com/emeritus-tech (43 public repos) is Emeritus''s public engineering org
+  and hosts the API reference site itself (emeritus-tech/emeritus-api-docs). The remaining
+  repos are forks of third-party projects (Canvas LMS, Keycloak, Solidus, osTicket, Redash,
+  Unleash, Baserow, MLflow) and Heroku buildpacks — infrastructure, not client libraries.'
+- 'github.com/emeritus (org "Emeritus Education") holds learner course assets, not code libraries.'

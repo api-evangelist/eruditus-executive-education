@@ -1,0 +1,65 @@
+generated: '2026-08-04'
+method: searched
+source: https://emeritus-tech.github.io/emeritus-api-docs/
+docs:
+- https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead.html
+- https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead_b2b.html
+format: proprietary
+format_note: >-
+  Emeritus does not use RFC 9457 problem+json. Two different error envelopes are published.
+  The simple envelope is a flat object with a single `error` string (used for 400 and 401);
+  the B2B validation envelope is `{"title": ..., "errors": {field: [message, ...]}}` (used for
+  422). Responses are served as `application/json; charset=utf-8` — no `application/problem+json`.
+envelopes:
+- name: simple
+  shape: '{"error": "<message>"}'
+  used_by: [400, 401]
+- name: validation
+  shape: '{"title": "<summary>", "errors": {"<field>": ["<message>", ...]}}'
+  used_by: [422]
+problems:
+- status: 401
+  title: This is not an authorized request
+  envelope: simple
+  meaning: The API key header is missing or invalid.
+  remediation: Send the token Emeritus issued you in the `LEAD_WEBHOOK_KEY` header (Leads API)
+    or `HTTP-EE-RESOURCES-API-KEY` header (Programs API). Contact Emeritus if you do not have one.
+  source_operation: openapi/eruditus-executive-education-leads-openapi.yml#createGenericLead
+  also_applies_to:
+  - openapi/eruditus-executive-education-programs-openapi.yml#listPrograms
+  - openapi/eruditus-executive-education-programs-openapi.yml#listSchools
+  - openapi/eruditus-executive-education-programs-openapi.yml#listLandingPageTemplates
+  verified_live: true
+  verified_note: 'Confirmed 2026-08-04 — GET https://admissions.emeritus.org/api/v1/programs_api/programs
+    without a key returns HTTP 401 with body {"error":"This is not an authorized request"}.'
+- status: 400
+  title: Missing batch
+  envelope: simple
+  meaning: The lead could not be attached to a program batch.
+  remediation: Supply a valid `course_code`. (`batch_name` is documented as DEPRECATED.)
+  source_operation: openapi/eruditus-executive-education-leads-openapi.yml#createGenericLead
+- status: 400
+  title: Missing custom form
+  envelope: simple
+  meaning: The program resolved from the request has no custom form configured to receive the lead.
+  remediation: Confirm the `course_code` with Emeritus.
+  source_operation: openapi/eruditus-executive-education-leads-openapi.yml#createGenericLead
+- status: 400
+  title: "Email required\nEmail must be an email"
+  envelope: simple
+  meaning: The `email` field was absent or was not a valid email address.
+  remediation: Send a syntactically valid email address in `email`.
+  source_operation: openapi/eruditus-executive-education-leads-openapi.yml#createGenericLead
+- status: 422
+  title: Could not save the lead
+  envelope: validation
+  meaning: One or more B2B lead fields failed validation. Published field keys include
+    `full_name`, `number_of_participants`, `name` and `company_name`.
+  remediation: Read `errors` for the per-field messages ("required", "is not included in the
+    list") and resend. Note the request field is spelled `number_of_participans` in the
+    reference while the error key is `number_of_participants`.
+  source_operation: openapi/eruditus-executive-education-leads-openapi.yml#createGenericLead
+gaps:
+- No error catalog is published for the Programs API beyond the 401; its reference pages
+  carry documentation-template placeholder response content.
+- No machine-readable error `type` URIs, no error codes, and no RFC 9457 adoption.

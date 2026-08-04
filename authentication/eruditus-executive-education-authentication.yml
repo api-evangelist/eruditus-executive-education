@@ -1,0 +1,51 @@
+generated: '2026-08-04'
+method: searched
+docs: https://emeritus-tech.github.io/emeritus-api-docs/index.html
+source: openapi/eruditus-executive-education-leads-openapi.yml, openapi/eruditus-executive-education-programs-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: LeadWebhookKey
+  type: apiKey
+  in: header
+  parameter: LEAD_WEBHOOK_KEY
+  description: 'Partner token issued by Emeritus. Per the published reference: "We will provide
+    your own token to use in the requests. Please contact us if you need one."'
+  sources:
+  - openapi/eruditus-executive-education-leads-openapi.yml
+- name: ResourcesApiKey
+  type: apiKey
+  in: header
+  parameter: HTTP-EE-RESOURCES-API-KEY
+  description: 'Partner token issued by Emeritus. Per the published reference: "We will provide
+    your own token to use in the requests. Please contact us if you need one."'
+  sources:
+  - openapi/eruditus-executive-education-programs-openapi.yml
+model: static-per-api-token
+issuance:
+  self_service: false
+  process: 'Manual. Published verbatim in the reference: "We will provide your own token to use
+    in the requests. Please contact us if you need one."'
+  contact: https://emeritus.org/connect-with-us/
+notes:
+- Each API has its own authorization header name — there is no single shared scheme across the
+  Emeritus estate. The reference states this explicitly under "Authentication".
+- Tokens are static bearer-equivalents carried in a custom header, not in `Authorization`.
+- No OAuth 2.0, no OpenID Connect, no mTLS, no HTTP basic/bearer. /.well-known/openid-configuration
+  and /.well-known/oauth-authorization-server return 404 on every Emeritus host (probed 2026-08-04).
+- No scope, permission or key-rotation surface is published; scopes/ is therefore not emitted.
+- The same token model applies to both the staging and production environments; no test-vs-live
+  key prefix scheme is published.
+verified:
+  fetched: '2026-08-04'
+  evidence:
+  - url: https://admissions.emeritus.org/api/v1/programs_api/programs
+    http_status: 401
+    body: '{"error":"This is not an authorized request"}'
+  - url: https://admissions.emeritus.org/api/v1/generic_lead
+    method: POST
+    http_status: 401
+    body: '{"error":"This is not an authorized request"}'

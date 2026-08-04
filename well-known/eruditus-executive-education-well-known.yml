@@ -1,0 +1,43 @@
+generated: '2026-08-04'
+method: probed
+source: live GET probes, 2026-08-04
+summary: >-
+  Every /.well-known/ discovery path was probed on all four Emeritus hosts — the two web hosts
+  and both API environments. None returned a document; every path returns HTTP 404. This is a
+  complete, honest negative: Emeritus serves no RFC 8615 discovery surface at all. No
+  `WellKnown` or `SecurityTxt` pointer is wired in apis.yml, because there is nothing to point
+  at. The vulnerability disclosure policy that would normally be reachable via security.txt is
+  published as an HTML page instead — see security/eruditus-executive-education-vulnerability-disclosure.yml.
+hosts:
+- host: https://eruditus.com
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://emeritus.org
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://admissions.emeritus.org
+  note: production API host
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://emeritus-tech.github.io
+  note: API reference / documentation host (GitHub Pages)
+  documents:
+  - {path: /emeritus-api-docs/llms.txt, status: 404}
+  - {path: /emeritus-api-docs/openapi.json, status: 404}
+  - {path: /emeritus-api-docs/swagger.json, status: 404}

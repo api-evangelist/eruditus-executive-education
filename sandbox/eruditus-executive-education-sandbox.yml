@@ -1,0 +1,47 @@
+generated: '2026-08-04'
+method: searched
+source: https://emeritus-tech.github.io/emeritus-api-docs/index.html
+summary: >-
+  Emeritus publishes a two-environment model — a staging environment for testing and a
+  production environment for live traffic — documented verbatim under "Environments" in the
+  API reference. There are no self-service test credentials, magic test values, fixtures or
+  time-simulation tooling; a staging token is issued by Emeritus on request, the same way a
+  production token is.
+model: separate-environments
+environments:
+- name: staging
+  base_url: https://staging.emerituss.org/api/v1/
+  purpose: 'Published verbatim: "You can use the staging environment for testing before using
+    the production with live traffic."'
+  reachable: true
+  evidence:
+    url: https://staging.emerituss.org/api/v1/programs_api/programs
+    http_status: 401
+    content_type: application/json; charset=utf-8
+    fetched: '2026-08-04'
+  note: The host is spelled `emerituss.org` (double s) in the provider's own reference; that
+    spelling is what resolves. `staging.emeritus.org` does not resolve.
+- name: production
+  base_url: https://admissions.emeritus.org/api/v1/
+  reachable: true
+  evidence:
+    url: https://admissions.emeritus.org/api/v1/programs_api/programs
+    http_status: 401
+    content_type: application/json; charset=utf-8
+    fetched: '2026-08-04'
+credentials:
+  self_service: false
+  key_prefixes_published: false
+  note: 'No test-vs-live key prefix scheme is published. Tokens for either environment are
+    issued manually: "We will provide your own token to use in the requests. Please contact
+    us if you need one."'
+test_values:
+  published: false
+  note: >-
+    No magic test identifiers are published. The reference does carry example values used in
+    its sample payloads — `course_code: KLG-DMS`, `country: UY`, `email: juan@email.com`,
+    `phone: +5555555555` — but these are documentation examples, not sanctioned test fixtures,
+    and are recorded here only as such.
+test_clocks: false
+fixtures_or_triggers: false
+console_or_playground: false

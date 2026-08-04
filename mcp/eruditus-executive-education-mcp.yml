@@ -1,0 +1,32 @@
+generated: '2026-08-04'
+method: derived
+status: candidate
+source: openapi/eruditus-executive-education-leads-openapi.yml, openapi/eruditus-executive-education-programs-openapi.yml
+notes: >-
+  No official hosted or remote Emeritus MCP server was found — searched the API reference,
+  the emeritus-tech and emeritus GitHub orgs, npm (@modelcontextprotocol and Emeritus scopes)
+  and public MCP registries; no /.well-known/oauth-protected-resource or agent card exists on
+  any Emeritus host. The tool list below is a CANDIDATE derived one-to-one from the published
+  REST operations, not something Emeritus ships. Every tool inherits its real input contract
+  from the backing OpenAPI operation.
+server:
+  name: emeritus
+  transport: http
+  url: null
+tools:
+- name: createGenericLead
+  description: Submit an enrollment lead (B2C or B2B/team) for an Emeritus program.
+  source_operation: openapi/eruditus-executive-education-leads-openapi.yml#createGenericLead
+  write: true
+- name: listPrograms
+  description: List Emeritus programs.
+  source_operation: openapi/eruditus-executive-education-programs-openapi.yml#listPrograms
+  write: false
+- name: listSchools
+  description: List the partner schools and universities behind Emeritus programs.
+  source_operation: openapi/eruditus-executive-education-programs-openapi.yml#listSchools
+  write: false
+- name: listLandingPageTemplates
+  description: List the landing page templates used for Emeritus programs.
+  source_operation: openapi/eruditus-executive-education-programs-openapi.yml#listLandingPageTemplates
+  write: false

@@ -1,23 +1,142 @@
 aid: eruditus-executive-education
 name: Eruditus
-description: 'Eruditus is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Eruditus (Eruditus Group) is an online executive-education company founded
+  in 2010 by Ashwin Damera and Chaitanya Kalipatnapu and headquartered in Singapore,
+  operating consumer and enterprise learning under the Eruditus and Emeritus brands.
+  It partners with more than 80 top-tier universities — including MIT, Harvard, Columbia,
+  Wharton, Cambridge, INSEAD, IIM, NUS and HKUST — to deliver senior executive programs,
+  professional certificates, short courses and degree programs to more than 350,000
+  learners across 80+ countries. Its public API surface is a small partner-facing REST
+  estate documented at emeritus-tech.github.io/emeritus-api-docs: a Leads API for
+  submitting B2C and B2B enrollment inquiries, and a Programs API exposing programs,
+  partner schools and landing page templates. Both are token-authenticated with
+  Emeritus-issued keys and offer separate staging and production environments.'
 url: https://raw.githubusercontent.com/api-evangelist/eruditus-executive-education/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-04'
 modified: '2026-08-04'
+image: https://s44783.pcdn.co/wp-content/uploads/2020/12/emeritus-logo-1200-675.jpg.optimal.jpg
 tags:
 - Company
-apis: []
+- Education
+- Online Learning
+- Executive Education
+- EdTech
+- Higher Education
+- Leads
+- Enrollment
+- Programs
+- Singapore
+apis:
+- aid: eruditus-executive-education:leads
+  name: Emeritus Leads API
+  description: 'Partner/vendor entry point for submitting enrollment inquiries into
+    Emeritus systems. A single POST endpoint accepts both the consumer (B2C) lead shape
+    and the enterprise/team (B2B) shape, selected by sending inquiring_for=team with
+    company and participant-count fields. Authenticated with an Emeritus-issued token
+    in the LEAD_WEBHOOK_KEY header, with separate staging and production environments.'
+  humanURL: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead.html
+  baseURL: https://admissions.emeritus.org/api/v1
+  tags:
+  - Leads
+  - Enrollment
+  - Education
+  properties:
+  - type: OpenAPI
+    url: openapi/eruditus-executive-education-leads-openapi.yml
+  - type: Documentation
+    url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead.html
+  - type: APIReference
+    url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/leads_api/generic_lead_b2b.html
+  - type: Overlay
+    url: overlays/eruditus-executive-education-leads-overlay.yaml
+- aid: eruditus-executive-education:programs
+  name: Emeritus Programs API
+  description: 'Read API over the Emeritus catalog — programs, the partner schools and
+    universities that award them, and the landing page templates used to market them.
+    Authenticated with an Emeritus-issued token in the HTTP-EE-RESOURCES-API-KEY header.
+    The provider''s reference pages for these resources still carry documentation-template
+    placeholder content, so request parameters and success response schemas are not
+    published.'
+  humanURL: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/programs_api/programs.html
+  baseURL: https://admissions.emeritus.org/api/v1
+  tags:
+  - Programs
+  - Schools
+  - Education
+  properties:
+  - type: OpenAPI
+    url: openapi/eruditus-executive-education-programs-openapi.yml
+  - type: Documentation
+    url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/programs_api/programs.html
+  - type: APIReference
+    url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/programs_api/schools.html
+  - type: Overlay
+    url: overlays/eruditus-executive-education-programs-overlay.yaml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/eruditus-executive-education-agentic-access.yml
 - type: Website
-  url: https://forgeglobal.com/eruditus-executive-education_stock/
+  url: https://eruditus.com/
+- type: Website
+  url: https://emeritus.org/
+- type: DeveloperPortal
+  url: https://emeritus-tech.github.io/emeritus-api-docs/
+- type: Documentation
+  url: https://emeritus-tech.github.io/emeritus-api-docs/
+- type: GettingStarted
+  url: https://emeritus-tech.github.io/emeritus-api-docs/index.html
+- type: GitHubOrganization
+  url: https://github.com/emeritus-tech
+- type: Blog
+  url: https://emeritus.org/blog/
+- type: Support
+  url: https://emeritus.org/connect-with-us/
+- type: TermsOfService
+  url: https://emeritus.org/terms-of-service/
+- type: PrivacyPolicy
+  url: https://emeritus.org/privacy-notice/
+- type: StatusPage
+  url: https://status.emeritus.org/
+- type: Security
+  url: https://emeritus.org/reporting-a-vulnerabilities/
+- type: VulnerabilityDisclosure
+  url: security/eruditus-executive-education-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/eruditus-executive-education-domain-security.yml
+- type: Authentication
+  url: authentication/eruditus-executive-education-authentication.yml
+- type: ErrorCatalog
+  url: errors/eruditus-executive-education-problem-types.yml
+- type: Conventions
+  url: conventions/eruditus-executive-education-conventions.yml
+- type: Lifecycle
+  url: lifecycle/eruditus-executive-education-lifecycle.yml
+- type: Sandbox
+  url: sandbox/eruditus-executive-education-sandbox.yml
+- type: DataModel
+  url: data-model/eruditus-executive-education-data-model.yml
+- type: Conformance
+  url: conformance/eruditus-executive-education-conformance.yml
+- type: Packages
+  url: packages/eruditus-executive-education-packages.yml
+- type: MCPServer
+  url: mcp/eruditus-executive-education-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/eruditus-executive-education-tool-crosswalk.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/eruditus-executive-education-llms.txt
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

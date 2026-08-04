@@ -1,0 +1,45 @@
+generated: '2026-08-04'
+method: searched
+source: https://emeritus-tech.github.io/emeritus-api-docs/
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://emeritus-tech.github.io/emeritus-api-docs/index.html
+  policy_published: false
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  note: >-
+    Emeritus publishes no API deprecation or sunset policy, and no `Deprecation` / `Sunset`
+    headers were observed (RFC 8594). Deprecation is communicated only inline in the
+    reference at the field level — see `deprecated_fields` below. Because there is no
+    published policy page, no `Deprecation` pointer is wired in apis.yml.
+deprecated_operations: []
+deprecated_fields:
+- field: batch_name
+  api: openapi/eruditus-executive-education-leads-openapi.yml#createGenericLead
+  note: 'Marked "DEPRECATED, used to fetch the program" in the published reference. Use
+    `course_code` instead.'
+- field: utm_campaign
+  api: openapi/eruditus-executive-education-leads-openapi.yml#createGenericLead
+  note: Marked "DEPRECATED" in the published reference.
+sla:
+  url: null
+  uptime_target: null
+  published: false
+status_page: https://status.emeritus.org/
+status_page_provider: Site24x7 StatusIQ
+status_page_evidence:
+  url: https://status.emeritus.org/
+  http_status: 200
+  fetched: '2026-08-04'
+changelog:
+  url: null
+  published: false
+  note: No dated API changelog or release notes are published; the reference site
+    (github.com/emeritus-tech/emeritus-api-docs) was last pushed 2023-03-23.
+support:
+  url: https://emeritus.org/connect-with-us/
+  note: 'Key issuance is manual — the reference states: "We will provide your own token to
+    use in the requests. Please contact us if you need one."'

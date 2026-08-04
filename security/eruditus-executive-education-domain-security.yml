@@ -1,0 +1,43 @@
+generated: '2026-08-04'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: eruditus.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 24 04:28:01 2026 GMT
+  hsts: null
+- host: emeritus.org
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 25 04:28:00 2026 GMT
+  hsts: null
+- host: admissions.emeritus.org
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  8 08:16:46 2026 GMT
+  hsts: null
+domains:
+- domain: eruditus.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: emeritus.org
+  dnssec: false
+  caa:
+  - 0 issuewild "ssl.com"
+  - 0 issue "amazontrust.com"
+  - 0 issue "comodoca.com"
+  - 0 issue "digicert.com; cansignhttpexchanges=yes"
+  - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog; cansignhttpexchanges=yes"
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+notes:
+- host: admissions.emeritus.org
+  observed: 'strict-transport-security: max-age=631138519'
+  method: manual probe of GET /api/v1/programs_api/programs, 2026-08-04
+  note: The API endpoints do return HSTS even though the automated HEAD probe of the host root recorded none.

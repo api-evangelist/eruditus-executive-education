@@ -1,0 +1,39 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Emeritus Programs API
+  version: 1.0.0
+x-generated: '2026-08-04'
+x-method: generated
+x-source: openapi/eruditus-executive-education-programs-openapi.yml
+extends: openapi/eruditus-executive-education-programs-openapi.yml
+actions:
+- target: $.info
+  description: Record the provenance of this description and the artifacts derived from it.
+  update:
+    x-apievangelist-provider: eruditus-executive-education
+    x-apievangelist-contract-origin: generated-from-published-html-reference
+    x-apievangelist-reference: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/programs_api/programs.html
+    x-apievangelist-artifacts:
+      authentication: authentication/eruditus-executive-education-authentication.yml
+      errors: errors/eruditus-executive-education-problem-types.yml
+      conventions: conventions/eruditus-executive-education-conventions.yml
+      data_model: data-model/eruditus-executive-education-data-model.yml
+- target: $.info
+  description: Record the documentation defect that caps how far this contract can be described.
+  update:
+    x-apievangelist-gaps:
+    - 'Reference pages for programs, schools and landing_page_templates all carry the documentation
+      template''s placeholder content: a single parameter row reading "param / string / This is a
+      param description" and a response body of {"example":"response"}.'
+    - No request parameters are published for any of the three collection reads.
+    - No success (2xx) response schema is published for any of the three collection reads.
+    - No pagination, filtering or sorting contract is published.
+    - 'The fix is on the provider side: publishing the real parameters and response schemas for
+      these three resources would make the whole Programs API machine-usable.'
+- target: $.paths['/api/v1/programs_api/programs'].get
+  description: Record live-probe evidence that the operation exists despite the thin documentation.
+  update:
+    x-apievangelist-verified:
+      url: https://admissions.emeritus.org/api/v1/programs_api/programs
+      http_status: 401
+      fetched: '2026-08-04'
