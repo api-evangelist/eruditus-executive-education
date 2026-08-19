@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Emeritus Programs API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "HTTP-EE-RESOURCES-API-KEY",
+      "value": "{{HTTP-EE-RESOURCES-API-KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Programs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List programs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admissions.emeritus.org/api/v1/programs_api/programs"
+          },
+          "docs": "Returns Emeritus programs. Query parameters are not published by the provider."
+        },
+        {
+          "info": {
+            "name": "List schools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admissions.emeritus.org/api/v1/programs_api/schools"
+          },
+          "docs": "Returns the partner schools / universities behind Emeritus programs. Query parameters are not published by the provider."
+        },
+        {
+          "info": {
+            "name": "List landing page templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://admissions.emeritus.org/api/v1/programs_api/landing_page_templates"
+          },
+          "docs": "Returns the landing page templates used for Emeritus programs. Query parameters are not published by the provider."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

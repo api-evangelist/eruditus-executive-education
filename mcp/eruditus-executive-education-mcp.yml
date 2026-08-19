@@ -2,13 +2,11 @@ generated: '2026-08-04'
 method: derived
 status: candidate
 source: openapi/eruditus-executive-education-leads-openapi.yml, openapi/eruditus-executive-education-programs-openapi.yml
-notes: >-
-  No official hosted or remote Emeritus MCP server was found — searched the API reference,
-  the emeritus-tech and emeritus GitHub orgs, npm (@modelcontextprotocol and Emeritus scopes)
-  and public MCP registries; no /.well-known/oauth-protected-resource or agent card exists on
-  any Emeritus host. The tool list below is a CANDIDATE derived one-to-one from the published
-  REST operations, not something Emeritus ships. Every tool inherits its real input contract
-  from the backing OpenAPI operation.
+notes: No official hosted or remote Emeritus MCP server was found — searched the API reference, the emeritus-tech
+  and emeritus GitHub orgs, npm (@modelcontextprotocol and Emeritus scopes) and public MCP registries;
+  no /.well-known/oauth-protected-resource or agent card exists on any Emeritus host. The tool list below
+  is a CANDIDATE derived one-to-one from the published REST operations, not something Emeritus ships.
+  Every tool inherits its real input contract from the backing OpenAPI operation.
 server:
   name: emeritus
   transport: http
@@ -30,3 +28,9 @@ tools:
   description: List the landing page templates used for Emeritus programs.
   source_operation: openapi/eruditus-executive-education-programs-openapi.yml#listLandingPageTemplates
   write: false
+deployment:
+  mode: none
+  verified: derived
+  tools: 4
+  checked: '2026-08-12'
+  source: catalog MCP census

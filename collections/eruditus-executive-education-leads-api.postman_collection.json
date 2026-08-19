@@ -1,0 +1,310 @@
+{
+  "item": [
+    {
+      "id": "97b54777-b48e-4edb-b0ba-bcf691dd30f6",
+      "name": "Leads",
+      "description": {
+        "content": "Enrollment lead submission.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9f0b3c19-9d8d-452c-8a54-68f07fee3f7e",
+          "name": "Submit an enrollment lead",
+          "request": {
+            "name": "Submit an enrollment lead",
+            "description": {
+              "content": "Submits a lead for an Emeritus program. Send the B2C body for an individual learner, or the B2B body (`inquiring_for: \"team\"` plus `company` and `number_of_participans`) for an enterprise/team inquiry. On success the API returns the identifier of the created lead.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "generic_lead"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "LEAD_WEBHOOK_KEY"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"course_code\": \"<string>\",\n  \"agree\": \"<boolean>\",\n  \"country\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"email\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"utm_source\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"work_experience\": \"<string>\",\n  \"job_title\": \"<string>\",\n  \"batch_name\": \"<string>\",\n  \"utm_campaign\": \"<string>\",\n  \"utm_content\": \"<string>\",\n  \"utm_placement\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe72eaf1-2359-4d3b-9273-f9769e30693e",
+              "name": "Lead created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generic_lead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "LEAD_WEBHOOK_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"course_code\": \"KLG-DMS\",\n  \"agree\": 1,\n  \"country\": \"UY\",\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Ferreira\",\n  \"email\": \"juan@email.com\",\n  \"phone\": \"+5555555555\",\n  \"utm_source\": \"vendorname\",\n  \"work_experience\": \"5-10 years\",\n  \"job_title\": \"Developer\",\n  \"batch_name\": \"B-1234\",\n  \"utm_campaign\": \"B-1234_some_utm_campaing\",\n  \"utm_content\": \"\",\n  \"utm_placement\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"lead\": \"94ab3b43-3209-4534-8afe-52070644866f\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f15e8836-a115-490b-a81d-744e970c5b8f",
+              "name": "Bad request — required data missing or invalid (B2C flow).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generic_lead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "LEAD_WEBHOOK_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"course_code\": \"KLG-DMS\",\n  \"agree\": 1,\n  \"country\": \"UY\",\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Ferreira\",\n  \"email\": \"juan@email.com\",\n  \"phone\": \"+5555555555\",\n  \"utm_source\": \"vendorname\",\n  \"work_experience\": \"5-10 years\",\n  \"job_title\": \"Developer\",\n  \"batch_name\": \"B-1234\",\n  \"utm_campaign\": \"B-1234_some_utm_campaing\",\n  \"utm_content\": \"\",\n  \"utm_placement\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Missing batch\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "903b2ef9-f2f8-440c-ac5e-b6681a118e8e",
+              "name": "Unauthorized — the `LEAD_WEBHOOK_KEY` header is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generic_lead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "LEAD_WEBHOOK_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"course_code\": \"KLG-DMS\",\n  \"agree\": 1,\n  \"country\": \"UY\",\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Ferreira\",\n  \"email\": \"juan@email.com\",\n  \"phone\": \"+5555555555\",\n  \"utm_source\": \"vendorname\",\n  \"work_experience\": \"5-10 years\",\n  \"job_title\": \"Developer\",\n  \"batch_name\": \"B-1234\",\n  \"utm_campaign\": \"B-1234_some_utm_campaing\",\n  \"utm_content\": \"\",\n  \"utm_placement\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"This is not an authorized request\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de44488f-972a-483b-aba2-a28c87d96b49",
+              "name": "Unprocessable entity — validation failed (B2B flow).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "generic_lead"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "LEAD_WEBHOOK_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"course_code\": \"KLG-DMS\",\n  \"agree\": 1,\n  \"country\": \"UY\",\n  \"first_name\": \"Juan\",\n  \"last_name\": \"Ferreira\",\n  \"email\": \"juan@email.com\",\n  \"phone\": \"+5555555555\",\n  \"utm_source\": \"vendorname\",\n  \"work_experience\": \"5-10 years\",\n  \"job_title\": \"Developer\",\n  \"batch_name\": \"B-1234\",\n  \"utm_campaign\": \"B-1234_some_utm_campaing\",\n  \"utm_content\": \"\",\n  \"utm_placement\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"title\": \"Could not save the lead\",\n  \"errors\": {\n    \"full_name\": [\n      \"required\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://admissions.emeritus.org",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "408e848b-ffdc-4ac4-bd10-1f69d1b93f0b",
+    "name": "Emeritus Leads API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Emeritus Leads API is the vendor/partner entry point for submitting enrollment inquiries (\"leads\") into Emeritus systems. A single endpoint accepts both the consumer (B2C) shape and the enterprise/team (B2B) shape; the B2B flow is selected by sending `inquiring_for: \"team\"` alongside company and participant-count fields. Requests are authenticated with a partner token supplied by Emeritus in the `LEAD_WEBHOOK_KEY` request header.\n\nThis description was assembled by API Evangelist from the API reference Emeritus publishes at https://emeritus-tech.github.io/emeritus-api-docs/ (source repository https://github.com/emeritus-tech/emeritus-api-docs). Emeritus does not publish an OpenAPI document; every path, parameter, example payload and response body below is transcribed verbatim from that public reference and the endpoint was confirmed live (see `x-evidence`). Nothing here is invented.\n\nContact Support:\n Name: Emeritus",
+      "type": "text/plain"
+    }
+  }
+}

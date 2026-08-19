@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Emeritus Leads API",
+    "version": "v1"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit an enrollment lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://admissions.emeritus.org/api/v1/generic_lead",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "LEAD_WEBHOOK_KEY",
+              "value": "{{LEAD_WEBHOOK_KEY}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Submits a lead for an Emeritus program. Send the B2C body for an individual learner, or the B2B body (`inquiring_for: \"team\"` plus `company` and `number_of_participans`) for an enterprise/team inquiry. On success the API returns the identifier of the created lead."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

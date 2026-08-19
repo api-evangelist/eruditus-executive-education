@@ -1,0 +1,135 @@
+openapi: 3.2.0
+info:
+  title: Emeritus Programs API
+  version: v1
+  summary: Read Emeritus programs, schools and landing page templates.
+  description: 'The Emeritus Programs API exposes read resources describing the Emeritus catalog — programs, the partner schools/universities that award them, and the landing page templates used to market them. Requests are authenticated with a partner token sent in the `HTTP-EE-RESOURCES-API-KEY` request header.
+
+
+    This description was assembled by API Evangelist from the API reference Emeritus publishes at https://emeritus-tech.github.io/emeritus-api-docs/. Emeritus does not publish an OpenAPI document. The three paths, the authentication header and the base URLs below are transcribed verbatim from that reference and every path was confirmed live (HTTP 401 without a key — see `x-evidence`). The reference pages for these three resources still carry the documentation template''s placeholder content for parameters ("param / This is a param description") and response bodies (''{"example":"response"}''), so no request parameters or success response schemas are published by the provider — and none have been invented here. This is a real, documented gap on the provider side.'
+  contact:
+    name: Emeritus
+    url: https://emeritus.org/connect-with-us/
+  x-generated-by: API Evangelist enrichment pipeline
+  x-method: generated
+  x-source: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/programs_api/programs.html
+  x-evidence:
+    fetched: '2026-08-04'
+    docs:
+    - url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/programs_api/programs.html
+      http_status: 200
+    - url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/programs_api/schools.html
+      http_status: 200
+    - url: https://emeritus-tech.github.io/emeritus-api-docs/api/v1/programs_api/landing_page_templates.html
+      http_status: 200
+    live_probe:
+    - url: https://admissions.emeritus.org/api/v1/programs_api/programs
+      method: GET
+      http_status: 401
+      content_type: application/json; charset=utf-8
+      body: '{"error":"This is not an authorized request"}'
+    - url: https://admissions.emeritus.org/api/v1/programs_api/schools
+      method: GET
+      http_status: 401
+      content_type: application/json; charset=utf-8
+    - url: https://admissions.emeritus.org/api/v1/programs_api/landing_page_templates
+      method: GET
+      http_status: 401
+      content_type: application/json; charset=utf-8
+    - url: https://staging.emerituss.org/api/v1/programs_api/programs
+      method: GET
+      http_status: 401
+      content_type: application/json; charset=utf-8
+    gaps:
+    - Request parameters are not published (reference pages carry template placeholder rows).
+    - Success (2xx) response schemas are not published (reference pages carry '{"example":"response"}').
+servers:
+- url: https://admissions.emeritus.org
+  description: production
+- url: https://staging.emerituss.org
+  description: staging (host spelled `emerituss.org` in the provider's published reference; confirmed reachable)
+security:
+- ResourcesApiKey: []
+tags:
+- name: Programs
+  description: Emeritus program catalog resources.
+paths:
+  /api/v1/programs_api/programs:
+    get:
+      tags:
+      - Programs
+      operationId: listPrograms
+      summary: List programs
+      description: Returns Emeritus programs. Query parameters are not published by the provider.
+      responses:
+        '200':
+          description: Program collection. The provider does not publish a response schema for this resource.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized — the `HTTP-EE-RESOURCES-API-KEY` header is missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: This is not an authorized request
+  /api/v1/programs_api/schools:
+    get:
+      tags:
+      - Programs
+      operationId: listSchools
+      summary: List schools
+      description: Returns the partner schools / universities behind Emeritus programs. Query parameters are not published by the provider.
+      responses:
+        '200':
+          description: School collection. The provider does not publish a response schema for this resource.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized — the `HTTP-EE-RESOURCES-API-KEY` header is missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: This is not an authorized request
+  /api/v1/programs_api/landing_page_templates:
+    get:
+      tags:
+      - Programs
+      operationId: listLandingPageTemplates
+      summary: List landing page templates
+      description: Returns the landing page templates used for Emeritus programs. Query parameters are not published by the provider.
+      responses:
+        '200':
+          description: Landing page template collection. The provider does not publish a response schema for this resource.
+          content:
+            application/json:
+              schema:
+                type: object
+        '401':
+          description: Unauthorized — the `HTTP-EE-RESOURCES-API-KEY` header is missing or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                error: This is not an authorized request
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+  securitySchemes:
+    ResourcesApiKey:
+      type: apiKey
+      in: header
+      name: HTTP-EE-RESOURCES-API-KEY
+      description: 'Partner token issued by Emeritus. Per the published reference: "We will provide your own token to use in the requests. Please contact us if you need one."'
