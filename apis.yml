@@ -14,7 +14,7 @@ description: 'Eruditus (Eruditus Group) is an online executive-education company
 url: https://raw.githubusercontent.com/api-evangelist/eruditus-executive-education/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
 image: https://s44783.pcdn.co/wp-content/uploads/2020/12/emeritus-logo-1200-675.jpg.optimal.jpg
