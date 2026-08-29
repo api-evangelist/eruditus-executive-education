@@ -1,0 +1,36 @@
+slug: eruditus-executive-education
+provider: Eruditus
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Education
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Programs
+  spec_file: eruditus-executive-education-programs-api-openapi.yml
+  capability_id: BC-4700.40
+  capability_id_l1: BC-4700
+  capability_name: Programme Catalogue Management
+  confidence: 0.78
+  evidence: '"exposes read resources describing the Emeritus catalog — programs, the partner schools/universities
+    that award them"; GET /api/v1/programs_api/programs  "List programs"'
+  reason: Read API over the institution's published catalogue of programmes and awarding schools, used
+    to market them — programme catalogue publication rather than programme design.
+- tag: Leads
+  spec_file: eruditus-executive-education-leads-api-openapi.yml
+  capability_id: BC-4710.10
+  capability_id_l1: BC-4710
+  capability_name: Prospect Outreach & Recruitment
+  confidence: 0.72
+  evidence: 'POST /api/v1/generic_lead  "Submit an enrollment lead"; description: "entry point for submitting
+    enrollment inquiries (\"leads\") into Emeritus systems"'
+  reason: Partner-submitted enrollment inquiries from prospective learners for executive-education programmes
+    — inbound prospective-student lead capture, i.e. recruitment of prospects. Some ambiguity versus generic
+    sales pipeline management, hence moderate confidence.

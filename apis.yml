@@ -84,6 +84,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/eruditus-executive-education-capability-edges.yml
+  name: Eruditus Business Capability Map
 - type: Overlay
   url: overlays/eruditus-executive-education-leads-overlay.yaml
 - type: AgenticAccess
