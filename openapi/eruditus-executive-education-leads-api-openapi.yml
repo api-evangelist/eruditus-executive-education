@@ -3,10 +3,7 @@ info:
   title: Emeritus Leads API
   version: v1
   summary: Submit B2C and B2B enrollment leads to Emeritus (Eruditus Group).
-  description: 'The Emeritus Leads API is the vendor/partner entry point for submitting enrollment inquiries ("leads") into Emeritus systems. A single endpoint accepts both the consumer (B2C) shape and the enterprise/team (B2B) shape; the B2B flow is selected by sending `inquiring_for: "team"` alongside company and participant-count fields. Requests are authenticated with a partner token supplied by Emeritus in the `LEAD_WEBHOOK_KEY` request header.
-
-
-    This description was assembled by API Evangelist from the API reference Emeritus publishes at https://emeritus-tech.github.io/emeritus-api-docs/ (source repository https://github.com/emeritus-tech/emeritus-api-docs). Emeritus does not publish an OpenAPI document; every path, parameter, example payload and response body below is transcribed verbatim from that public reference and the endpoint was confirmed live (see `x-evidence`). Nothing here is invented.'
+  description: The Emeritus Leads API is the vendor/partner entry point for submitting enrollment inquiries ("leads") into Emeritus systems.
   contact:
     name: Emeritus
     url: https://emeritus.org/connect-with-us/
@@ -158,6 +155,25 @@ paths:
                       - required
 components:
   schemas:
+    ValidationError:
+      type: object
+      properties:
+        title:
+          type: string
+          examples:
+          - Could not save the lead
+        errors:
+          type: object
+          description: Field name to list of validation messages.
+          additionalProperties:
+            type: array
+            items:
+              type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
     GenericLead:
       type: object
       title: Generic lead (B2C)
@@ -231,25 +247,6 @@ components:
           type: string
           description: Can be used for optional data from vendors.
         utm_placement:
-          type: string
-    ValidationError:
-      type: object
-      properties:
-        title:
-          type: string
-          examples:
-          - Could not save the lead
-        errors:
-          type: object
-          description: Field name to list of validation messages.
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    Error:
-      type: object
-      properties:
-        error:
           type: string
     LeadCreated:
       type: object

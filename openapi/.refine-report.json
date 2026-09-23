@@ -1,8 +1,8 @@
 {
   "provider": "eruditus-executive-education",
   "sources": [
-    "eruditus-executive-education-leads-api-openapi.yml",
-    "eruditus-executive-education-programs-api-openapi.yml"
+    "_ae-authored/eruditus-executive-education-leads-openapi.yml",
+    "_ae-authored/eruditus-executive-education-programs-openapi.yml"
   ],
   "outputs": [
     "eruditus-executive-education-leads-api-openapi.yml",
@@ -12,7 +12,13 @@
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (0 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "eruditus-executive-education-leads-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "eruditus-executive-education-programs-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "eruditus-executive-education-leads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "eruditus-executive-education-programs-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

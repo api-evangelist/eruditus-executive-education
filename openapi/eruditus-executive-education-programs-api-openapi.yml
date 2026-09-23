@@ -3,10 +3,7 @@ info:
   title: Emeritus Programs API
   version: v1
   summary: Read Emeritus programs, schools and landing page templates.
-  description: 'The Emeritus Programs API exposes read resources describing the Emeritus catalog — programs, the partner schools/universities that award them, and the landing page templates used to market them. Requests are authenticated with a partner token sent in the `HTTP-EE-RESOURCES-API-KEY` request header.
-
-
-    This description was assembled by API Evangelist from the API reference Emeritus publishes at https://emeritus-tech.github.io/emeritus-api-docs/. Emeritus does not publish an OpenAPI document. The three paths, the authentication header and the base URLs below are transcribed verbatim from that reference and every path was confirmed live (HTTP 401 without a key — see `x-evidence`). The reference pages for these three resources still carry the documentation template''s placeholder content for parameters ("param / This is a param description") and response bodies (''{"example":"response"}''), so no request parameters or success response schemas are published by the provider — and none have been invented here. This is a real, documented gap on the provider side.'
+  description: The Emeritus Programs API exposes read resources describing the Emeritus catalog — programs, the partner schools/universities that award them, and the landing page templates used to market them.
   contact:
     name: Emeritus
     url: https://emeritus.org/connect-with-us/
