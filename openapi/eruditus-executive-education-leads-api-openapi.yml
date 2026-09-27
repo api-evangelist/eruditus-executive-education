@@ -155,25 +155,6 @@ paths:
                       - required
 components:
   schemas:
-    ValidationError:
-      type: object
-      properties:
-        title:
-          type: string
-          examples:
-          - Could not save the lead
-        errors:
-          type: object
-          description: Field name to list of validation messages.
-          additionalProperties:
-            type: array
-            items:
-              type: string
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
     GenericLead:
       type: object
       title: Generic lead (B2C)
@@ -248,6 +229,11 @@ components:
           description: Can be used for optional data from vendors.
         utm_placement:
           type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
     LeadCreated:
       type: object
       properties:
@@ -256,6 +242,20 @@ components:
           description: Identifier of the created lead (UUID in the published example).
           examples:
           - 94ab3b43-3209-4534-8afe-52070644866f
+    ValidationError:
+      type: object
+      properties:
+        title:
+          type: string
+          examples:
+          - Could not save the lead
+        errors:
+          type: object
+          description: Field name to list of validation messages.
+          additionalProperties:
+            type: array
+            items:
+              type: string
     GenericLeadB2B:
       type: object
       title: Generic lead (B2B / team)
