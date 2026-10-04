@@ -155,80 +155,14 @@ paths:
                       - required
 components:
   schemas:
-    GenericLead:
+    LeadCreated:
       type: object
-      title: Generic lead (B2C)
-      required:
-      - course_code
-      - agree
-      - country
-      - last_name
-      - email
-      - phone
-      - utm_source
       properties:
-        course_code:
+        lead:
           type: string
-          description: Used to fetch the program.
+          description: Identifier of the created lead (UUID in the published example).
           examples:
-          - KLG-DMS
-        agree:
-          type: boolean
-          description: 0 = False; 1 = True.
-          examples:
-          - 1
-        country:
-          type: string
-          description: Use 2 digits ISO code.
-          examples:
-          - UY
-        last_name:
-          type: string
-          examples:
-          - Ferreira
-        email:
-          type: string
-          description: Should be a valid email address.
-          examples:
-          - juan@email.com
-        phone:
-          type: string
-          examples:
-          - '+5555555555'
-        utm_source:
-          type: string
-          description: 'Will represent the vendor name in one word (ex: educationdynamics).'
-          examples:
-          - vendorname
-        first_name:
-          type: string
-          examples:
-          - Juan
-        work_experience:
-          type: string
-          examples:
-          - 5-10 years
-        job_title:
-          type: string
-          examples:
-          - Developer
-        batch_name:
-          type: string
-          deprecated: true
-          description: DEPRECATED, used to fetch the program.
-          examples:
-          - B-1234
-        utm_campaign:
-          type: string
-          deprecated: true
-          description: DEPRECATED.
-          examples:
-          - B-1234_some_utm_campaing
-        utm_content:
-          type: string
-          description: Can be used for optional data from vendors.
-        utm_placement:
-          type: string
+          - 94ab3b43-3209-4534-8afe-52070644866f
     GenericLeadB2B:
       type: object
       title: Generic lead (B2B / team)
@@ -336,14 +270,80 @@ components:
             type: array
             items:
               type: string
-    LeadCreated:
+    GenericLead:
       type: object
+      title: Generic lead (B2C)
+      required:
+      - course_code
+      - agree
+      - country
+      - last_name
+      - email
+      - phone
+      - utm_source
       properties:
-        lead:
+        course_code:
           type: string
-          description: Identifier of the created lead (UUID in the published example).
+          description: Used to fetch the program.
           examples:
-          - 94ab3b43-3209-4534-8afe-52070644866f
+          - KLG-DMS
+        agree:
+          type: boolean
+          description: 0 = False; 1 = True.
+          examples:
+          - 1
+        country:
+          type: string
+          description: Use 2 digits ISO code.
+          examples:
+          - UY
+        last_name:
+          type: string
+          examples:
+          - Ferreira
+        email:
+          type: string
+          description: Should be a valid email address.
+          examples:
+          - juan@email.com
+        phone:
+          type: string
+          examples:
+          - '+5555555555'
+        utm_source:
+          type: string
+          description: 'Will represent the vendor name in one word (ex: educationdynamics).'
+          examples:
+          - vendorname
+        first_name:
+          type: string
+          examples:
+          - Juan
+        work_experience:
+          type: string
+          examples:
+          - 5-10 years
+        job_title:
+          type: string
+          examples:
+          - Developer
+        batch_name:
+          type: string
+          deprecated: true
+          description: DEPRECATED, used to fetch the program.
+          examples:
+          - B-1234
+        utm_campaign:
+          type: string
+          deprecated: true
+          description: DEPRECATED.
+          examples:
+          - B-1234_some_utm_campaing
+        utm_content:
+          type: string
+          description: Can be used for optional data from vendors.
+        utm_placement:
+          type: string
   securitySchemes:
     LeadWebhookKey:
       type: apiKey
